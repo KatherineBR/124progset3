@@ -1,6 +1,9 @@
+import sys
+
 def main():
     if len(sys.argv) == 0:
         #for testing!
+        pass
     elif len(sys.argv) != 4:
         print("Usage: python script.py <flag> <algorithm> <inputfile>")
         sys.exit(1)
