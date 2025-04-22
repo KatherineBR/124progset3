@@ -9,6 +9,9 @@ def residue(A, S):
     for i in range(len(A)):
         sum += A[i] * S[i]
     return sum
+
+def T(n):
+    return n
     
 
 def std_repeated_random(A):
