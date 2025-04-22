@@ -75,6 +75,12 @@ def std_annealing(A):
     return seq2
 
 
+def pp_karmarker_karp(P, A):
+    A1 = [0] * len(A)
+    for j in range(n):
+        pass
+
+
 def pp_repeated_random(n):
     pass
 
