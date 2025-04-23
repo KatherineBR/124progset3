@@ -4,7 +4,7 @@ import math
 import heapq
 import numpy as np
 
-max_iter = 25000
+max_iter = 10000
 
 def residue(A, S):
     sum = 0
@@ -53,39 +53,48 @@ def generate_neighbor(seq, n):
 
 def std_repeated_random(A):
     n = len(A)
+    # print(n)
     
     # Randomly generate some starting sequence
-    seq = random.choices([1, -1], k=n)
+    seq = [random.choice([1, -1]) for _ in range(n)]
+    # print(seq)
+    # print(len(seq))
 
+    loweringcount = 0
     # Repeatedly generate sequences and take the better one
-    for _ in range(1, max_iter):
-        seq1 = random.choices([1, -1], k=n)
+    for _ in range(max_iter):
+        seq1 = [random.choice([1, -1]) for _ in range(n)]
         if residue(A, seq1) < residue(A, seq):
             seq = seq1
+            loweringcount += 1
+    # print(loweringcount)
     return residue(A, seq)
 
 def std_hill_climbing(A):
     n = len(A)
 
     # Randomly generate some starting sequence
-    seq = random.choices([1, -1], k=n)
+    seq = [random.choice([1, -1]) for _ in range(n)]
 
     # Iterate over possible neighbors, only taking the better one
-    for _ in range(1, max_iter):
+    loweringcount = 0
+    for _ in range(max_iter):
         seq1 = generate_neighbor(seq, n)
 
         if residue(A, seq1) < residue(A, seq):
             seq = seq1
-    
+            loweringcount += 1
+
+    # print(loweringcount)
     return residue(A, seq)
 
 def std_annealing(A):
     n = len(A)
 
-    seq = random.choices([1, -1], k=n)
+    seq = [random.choice([-1, 1]) for _ in range(n)]
     seq2 = seq
 
-    for i in range(1, max_iter):
+    for i in range(max_iter):
         seq1 = generate_neighbor(seq, n)
 
         if residue(A, seq1) < residue(A, seq):
@@ -103,19 +112,19 @@ def std_annealing(A):
 
 def generate_neighbor_pp(p, n):
     i = random.randrange(0, n)
-    j = random.randint(1, n)
+    j = random.randint(0, n)
     while p[i] == j:
-        j = random.randint(1, n)
+        j = random.randint(0, n)
     p[i] = j
     return p
 
 
 def pp_repeated_random(A):
     n = len(A)
-    seq = random.choices(range(1, n), k=n)
-    for _ in range(1, max_iter):
+    seq = [random.choice(range(n)) for _ in range(n)]
+    for _ in range(max_iter):
         # print(seq)
-        seq1 = random.choices(range(1, n), k=n)
+        seq1 = [random.choice(range(n)) for _ in range(n)]
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
             seq = seq1
 
@@ -125,10 +134,10 @@ def pp_hill_climbing(A):
     n = len(A)
 
     # Randomly generate some starting sequence
-    seq = random.choices(range(0, n), k=n)
+    seq = [random.choice(range(n)) for _ in range(n)]
 
     # Iterate over possible neighbors, only taking the better one
-    for _ in range(1, max_iter):
+    for _ in range(max_iter):
         seq1 = generate_neighbor_pp(seq, n)
 
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
@@ -140,10 +149,10 @@ def pp_hill_climbing(A):
 def pp_annealing(A):
     n = len(A)
 
-    seq = random.choices(range(1, n + 1), k=n)
+    seq = [random.choice(range(n)) for _ in range(n)]
     seq2 = seq
 
-    for i in range(1, max_iter):
+    for i in range(max_iter):
         seq1 = generate_neighbor_pp(seq, n)
 
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
@@ -162,7 +171,8 @@ def pp_annealing(A):
 def main():
     if len(sys.argv) == 1:
         #for testing!
-        print(std_repeated_random([10, 8, 1, 7, 6, 5]))
+        # print(residue([10,12,5,8], [-1, 1, 1, -1]))
+        # print(std_repeated_random([10, 8, 1, 7, 6, 5]))
         # print(karmarker_karp([10, 8, 7, 6, 5]))
         # print(pp_karmarker_karp([10, 8, 7, 6, 5], [1, 2, 2, 4, 5]))
         # print(generate_neighbor([1, -1, 1], 3))
