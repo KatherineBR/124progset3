@@ -35,8 +35,8 @@ def pp_karmarker_karp(A, P):
         
     return karmarker_karp(A1)
 
-def T(n):
-    return n
+def T(iter):
+    return pow(10, 10) * pow(0.8, (iter // 300))
 
 def generate_neighbor(seq, n):
     neighbor = seq.copy()
@@ -61,7 +61,7 @@ def std_repeated_random(A):
         seq1 = random.choices([1, -1], k=n)
         if residue(A, seq1) < residue(A, seq):
             seq = seq1
-    return seq
+    return residue(seq)
 
 def std_hill_climbing(A):
     n = len(A)
@@ -76,7 +76,7 @@ def std_hill_climbing(A):
         if residue(A, seq1) < residue(A, seq):
             seq = seq1
     
-    return seq
+    return residue(seq)
 
 def std_annealing(A):
     n = len(A)
@@ -97,7 +97,7 @@ def std_annealing(A):
         if residue(A, seq) < residue(A, seq2):
             seq2 = seq
     
-    return seq2
+    return residue(seq2)
 
 
 def generate_neighbor_pp(p, n):
@@ -118,7 +118,7 @@ def pp_repeated_random(A):
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
             seq = seq1
 
-    return seq
+    return pp_karmarker_karp(seq)
 
 def pp_hill_climbing(A):
     n = len(A)
@@ -133,7 +133,7 @@ def pp_hill_climbing(A):
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
             seq = seq1
     
-    return seq
+    return pp_karmarker_karp(seq)
     
 
 def pp_annealing(A):
@@ -155,7 +155,7 @@ def pp_annealing(A):
         if pp_karmarker_karp(A, seq) < pp_karmarker_karp(A, seq2):
             seq2 = seq
     
-    return seq2
+    return pp_karmarker_karp(seq2)
 
 
 def main():
@@ -166,18 +166,37 @@ def main():
         # print(generate_neighbor([1, -1, 1], 3))
         # print(std_hill_climbing([10, 8, 7, 6, 5]))
         print(pp_annealing([10, 8, 7, 6, 5]))
-
-
+        return
 
     elif len(sys.argv) != 4:
         print("Usage: python script.py <flag> <algorithm> <inputfile>")
         sys.exit(1)
-    else:
-        try:
-            flag, algorithm, inputfile = int(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
-        except ValueError:
-            print("Error: flag and algorithm must be integers.")
-            sys.exit(1)
+    
+    try:
+        flag, algorithm, inputfile = int(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
+    except ValueError:
+        print("Error: flag and algorithm must be integers.")
+        sys.exit(1)
+    
+    # TODO: does inputfile need to be changed
+    A = inputfile
+
+    # TODO: bro i am running python 3.9.6 and don't have match.
+    match algorithm:
+        case 0:
+            karmarker_karp(A)
+        case 1:
+            std_repeated_random(A)
+        case 2:
+            std_hill_climbing(A)
+        case 3:
+            std_annealing(A)
+        case 11:
+            pp_repeated_random(A)
+        case 12:
+            pp_hill_climbing(A)
+        case 13:
+            pp_annealing(A)
 
     #deal with reading input here
     #call our method here
