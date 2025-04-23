@@ -2,6 +2,7 @@ import sys
 import random
 import math
 import heapq
+import numpy as np
 
 max_iter = 10
 
@@ -179,7 +180,9 @@ def main():
         sys.exit(1)
     
     # TODO: does inputfile need to be changed
-    A = inputfile
+    A = []
+    with open(inputfile, 'r') as file:
+        A = np.array([int(line.strip()) for line in file])
 
     # TODO: bro i am running python 3.9.6 and don't have match.
     match algorithm:
