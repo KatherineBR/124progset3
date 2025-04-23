@@ -4,7 +4,7 @@ import math
 import heapq
 import numpy as np
 
-max_iter = 10
+max_iter = 25000
 
 def residue(A, S):
     sum = 0
@@ -162,11 +162,18 @@ def pp_annealing(A):
 def main():
     if len(sys.argv) == 1:
         #for testing!
+        print(std_repeated_random([10, 8, 1, 7, 6, 5]))
         # print(karmarker_karp([10, 8, 7, 6, 5]))
         # print(pp_karmarker_karp([10, 8, 7, 6, 5], [1, 2, 2, 4, 5]))
         # print(generate_neighbor([1, -1, 1], 3))
         # print(std_hill_climbing([10, 8, 7, 6, 5]))
-        print(pp_annealing([10, 8, 7, 6, 5]))
+        # print(pp_annealing([10, 8, 7, 6, 5]))
+        # for _ in range(50):
+        #     A = [random.randint(0, 100) for _ in range(100)]
+            # karmarker_karp(A)
+            # std_repeated_random(A)
+            # std_hill_climbing(A)
+            # std_simulated_annealing(A)
         return
 
     elif len(sys.argv) != 4:
@@ -200,9 +207,6 @@ def main():
             print(pp_hill_climbing(A))
         case 13:
             print(pp_annealing(A))
-
-    #deal with reading input here
-    #call our method here
 
 if __name__ == "__main__":
     main()
