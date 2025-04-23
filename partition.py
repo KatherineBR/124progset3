@@ -62,7 +62,7 @@ def std_repeated_random(A):
         seq1 = random.choices([1, -1], k=n)
         if residue(A, seq1) < residue(A, seq):
             seq = seq1
-    return residue(seq)
+    return residue(A, seq)
 
 def std_hill_climbing(A):
     n = len(A)
@@ -77,7 +77,7 @@ def std_hill_climbing(A):
         if residue(A, seq1) < residue(A, seq):
             seq = seq1
     
-    return residue(seq)
+    return residue(A, seq)
 
 def std_annealing(A):
     n = len(A)
@@ -98,7 +98,7 @@ def std_annealing(A):
         if residue(A, seq) < residue(A, seq2):
             seq2 = seq
     
-    return residue(seq2)
+    return residue(A, seq2)
 
 
 def generate_neighbor_pp(p, n):
@@ -114,12 +114,12 @@ def pp_repeated_random(A):
     n = len(A)
     seq = random.choices(range(1, n), k=n)
     for _ in range(1, max_iter):
-        print(seq)
+        # print(seq)
         seq1 = random.choices(range(1, n), k=n)
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
             seq = seq1
 
-    return pp_karmarker_karp(seq)
+    return pp_karmarker_karp(A, seq)
 
 def pp_hill_climbing(A):
     n = len(A)
@@ -134,7 +134,7 @@ def pp_hill_climbing(A):
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
             seq = seq1
     
-    return pp_karmarker_karp(seq)
+    return pp_karmarker_karp(A, seq)
     
 
 def pp_annealing(A):
@@ -156,7 +156,7 @@ def pp_annealing(A):
         if pp_karmarker_karp(A, seq) < pp_karmarker_karp(A, seq2):
             seq2 = seq
     
-    return pp_karmarker_karp(seq2)
+    return pp_karmarker_karp(A, seq2)
 
 
 def main():
@@ -187,19 +187,19 @@ def main():
     # TODO: bro i am running python 3.9.6 and don't have match.
     match algorithm:
         case 0:
-            karmarker_karp(A)
+            print(karmarker_karp(A))
         case 1:
-            std_repeated_random(A)
+            print(std_repeated_random(A))
         case 2:
-            std_hill_climbing(A)
+            print(std_hill_climbing(A))
         case 3:
-            std_annealing(A)
+            print(std_annealing(A))
         case 11:
-            pp_repeated_random(A)
+            print(pp_repeated_random(A))
         case 12:
-            pp_hill_climbing(A)
+            print(pp_hill_climbing(A))
         case 13:
-            pp_annealing(A)
+            print(pp_annealing(A))
 
     #deal with reading input here
     #call our method here
