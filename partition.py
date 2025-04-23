@@ -111,10 +111,10 @@ def std_annealing(A):
 
 
 def generate_neighbor_pp(p, n):
-    i = random.randrange(0, n)
-    j = random.randint(0, n)
+    i = random.randrange(0, n) # randrange is inclusive, exclusive
+    j = random.randrange(0, n)
     while p[i] == j:
-        j = random.randint(0, n)
+        j = random.randrange(0, n)
     p[i] = j
     return p
 
@@ -196,7 +196,6 @@ def main():
         print("Error: flag and algorithm must be integers.")
         sys.exit(1)
     
-    # TODO: does inputfile need to be changed
     A = []
     with open(inputfile, 'r') as file:
         A = np.array([int(line.strip()) for line in file])
