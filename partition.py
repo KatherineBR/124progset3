@@ -3,8 +3,9 @@ import random
 import math
 import heapq
 import numpy as np
+import matplotlib.pyplot as plt
 
-max_iter = 10000
+max_iter = 25000
 
 def residue(A, S):
     sum = 0
@@ -186,7 +187,7 @@ def main():
         # Task 2
         data = []
         instance = [0] * 7
-        for i in range(1):
+        for i in range(25):
             A = [random.choice(range(10**12)) for _ in range(100)]
             # print(A)
             instance[0] = karmarker_karp(A)
@@ -198,6 +199,23 @@ def main():
             instance[6] = pp_annealing(A)
             data.append(instance)
         print(data)
+        averages = np.mean(data, axis=0) #across the 25 rows is axis 0
+        print(averages)
+        algorithm_labels = ["0", "1", "2", "3", "11", "12", "13"]
+
+        # print(len(averages), len(algorithm_labels))  # Should both be 6
+
+        plt.figure(figsize=(10, 6))
+        fig, ax = plt.subplots()
+        ax.bar(algorithm_labels, averages, color="teal", edgecolor="white")
+        ax.set_title("Average Performance of Algorithms Over 25 Runs")
+        ax.set_xlabel("Algorithms")
+        ax.set_ylabel("Average Value")
+        ax.set_yscale('log')
+
+        plt.savefig("algorithm_averages.png", dpi=300)
+        plt.close()
+        # print(data)
         return
 
     elif len(sys.argv) != 4:
