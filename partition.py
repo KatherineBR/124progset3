@@ -187,7 +187,7 @@ def main():
         data = []
         instance = [0] * 7
         for i in range(1):
-            A = [random.choice(range(10**12)) for _ in range(n)]
+            A = [random.choice(range(10**12)) for _ in range(100)]
             # print(A)
             instance[0] = karmarker_karp(A)
             instance[1] = std_repeated_random(A)
