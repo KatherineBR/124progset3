@@ -57,8 +57,6 @@ def std_repeated_random(A):
     
     # Randomly generate some starting sequence
     seq = [random.choice([1, -1]) for _ in range(n)]
-    # print(seq)
-    # print(len(seq))
 
     loweringcount = 0
     # Repeatedly generate sequences and take the better one
@@ -111,19 +109,19 @@ def std_annealing(A):
 
 
 def generate_neighbor_pp(p, n):
-    i = random.randrange(0, n) # randrange is inclusive, exclusive
-    j = random.randrange(0, n)
-    while p[i] == j:
-        j = random.randrange(0, n)
-    p[i] = j
-    return p
+    new_p = p.copy()
+    i = random.choice(range(n)) # randrange is inclusive, exclusive
+    j = random.choice(range(n)) 
+    while new_p[i] == j:
+        j = random.choice(range(n)) 
+    new_p[i] = j
+    return new_p
 
 
 def pp_repeated_random(A):
     n = len(A)
     seq = [random.choice(range(n)) for _ in range(n)]
     for _ in range(max_iter):
-        # print(seq)
         seq1 = [random.choice(range(n)) for _ in range(n)]
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
             seq = seq1
@@ -135,13 +133,19 @@ def pp_hill_climbing(A):
 
     # Randomly generate some starting sequence
     seq = [random.choice(range(n)) for _ in range(n)]
+    # print("seq: " + str(seq))
 
     # Iterate over possible neighbors, only taking the better one
+    lowercounter = 0
     for _ in range(max_iter):
         seq1 = generate_neighbor_pp(seq, n)
-
+        # print("seq: " + str(seq))
+        # print("seq1: " + str(seq1))
+        # print("karmarker diff: " + str(pp_karmarker_karp(A, seq1) - (pp_karmarker_karp(A, seq))))
         if pp_karmarker_karp(A, seq1) < pp_karmarker_karp(A, seq):
+            lowercounter += 1
             seq = seq1
+    # print(lowercounter)
     
     return pp_karmarker_karp(A, seq)
     
@@ -172,18 +176,28 @@ def main():
     if len(sys.argv) == 1:
         #for testing!
         # print(residue([10,12,5,8], [-1, 1, 1, -1]))
-        # print(std_repeated_random([10, 8, 1, 7, 6, 5]))
+        # print(pp_repeated_random([10, 8, 1, 7, 6, 5]))
         # print(karmarker_karp([10, 8, 7, 6, 5]))
         # print(pp_karmarker_karp([10, 8, 7, 6, 5], [1, 2, 2, 4, 5]))
-        # print(generate_neighbor([1, -1, 1], 3))
+        # print(generate_neighbor_pp([2, 2, 1], 3))
         # print(std_hill_climbing([10, 8, 7, 6, 5]))
         # print(pp_annealing([10, 8, 7, 6, 5]))
-        # for _ in range(50):
-        #     A = [random.randint(0, 100) for _ in range(100)]
-            # karmarker_karp(A)
-            # std_repeated_random(A)
-            # std_hill_climbing(A)
-            # std_simulated_annealing(A)
+
+        # Task 2
+        data = []
+        instance = [0] * 7
+        for i in range(1):
+            A = [random.choice(range(10**12)) for _ in range(n)]
+            # print(A)
+            instance[0] = karmarker_karp(A)
+            instance[1] = std_repeated_random(A)
+            instance[2] = std_hill_climbing(A)
+            instance[3] = std_annealing(A)
+            instance[4] = pp_repeated_random(A)
+            instance[5] = pp_hill_climbing(A)
+            instance[6] = pp_annealing(A)
+            data.append(instance)
+        print(data)
         return
 
     elif len(sys.argv) != 4:
