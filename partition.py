@@ -187,7 +187,7 @@ def main():
         # Task 2
         data = []
         instance = [0] * 7
-        for i in range(25):
+        for i in range(50):
             A = [random.choice(range(10**12)) for _ in range(100)]
             # print(A)
             instance[0] = karmarker_karp(A)
@@ -208,12 +208,12 @@ def main():
         plt.figure(figsize=(10, 6))
         fig, ax = plt.subplots()
         ax.bar(algorithm_labels, averages, color="teal", edgecolor="white")
-        ax.set_title("Average Performance of Algorithms Over 25 Runs")
+        ax.set_title("Average Performance of Algorithms Over 50 Runs")
         ax.set_xlabel("Algorithms")
         ax.set_ylabel("Average Value")
         ax.set_yscale('log')
 
-        plt.savefig("algorithm_averages.png", dpi=300)
+        plt.savefig("algorithm_averages50.png", dpi=300)
         plt.close()
         # print(data)
         return
